@@ -20,14 +20,15 @@ FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends tzdata ca-certificates && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /CLIProxyAPI
+RUN mkdir -p /CLIProxyAPI /app
 
 COPY --from=builder ./app/CLIProxyAPI /CLIProxyAPI/CLIProxyAPI
+COPY --from=builder ./app/CLIProxyAPI /app/CLIProxyAPI
 
 COPY config.example.yaml /CLIProxyAPI/config.example.yaml
 COPY config.example.yaml /CLIProxyAPI/config.yaml
+COPY config.example.yaml /app/config.example.yaml
 COPY config.example.yaml /app/config.yaml
-RUN cp config.example.yaml config.yaml
 
 WORKDIR /CLIProxyAPI
 
